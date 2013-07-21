@@ -28,8 +28,8 @@
     <string name="sim_disable_notifications">Vypnout \"SIM není vložená\" hlášení</string>
     <string name="sim_disable_notifications_summary">\"SIM není vložená\" hlášení vypnuté</string>
 
-    <string name="poweroff_advanced_title">Rozšířené menu napájení</string>
-    <string name="poweroff_advanced_summary">Umožní rozšířené menu napájení s možností restartu a restartu do recovery</string>
+    <string name="poweroff_advanced_title">Rozšířené restart menu</string>
+    <string name="poweroff_advanced_summary">Aktivuje rozšířené restart menu s možností restartu do recovery</string>
     <string name="poweroff_recovery">Recovery</string>    
 
     <string name="vol_key_cursor_control_title">Pohyb kurzoru tlačítky hlasitosti</string>
@@ -166,5 +166,95 @@
     <!--  Low battery LED flashing -->
     <string name="pref_flashing_led_disable_title">Vypnout blikání LED</string>
     <string name="pref_flashing_led_disable_summary">Vypne otravné blikání LED, které je aktivní v případě nízké úrovně baterie</string>
+
+    <!-- Display tweaks category -->
+    <string name="pref_cat_display_title">Nastavení obrazovky</string>
+    <string name="pref_cat_display_summary">Obsahuje různá nastavení týkající se obrazovky</string>
+
+    <!-- Minimum brightness level -->
+    <string name="pref_brightness_min_title">Minimální úroveň jasu</string>
+    <string name="pref_brightness_min_summary">Umožňuje nastavit minimální úroveň jasu pro manuální nastavení jasu (vyžaduje restart)</string>
+    <string name="pref_brightness_dlg_msg">Hodnota z intervalu: 20 &#8211; 80</string>
+
+    <!--  Autobrightness levels -->
+    <string name="pref_ab_title">Úrovně automatického jasu</string>
+    <string name="pref_ab_summary">Umožňuje nastavit úrovně světla prostředí a odpovídající úrovně podsvícení obrazovky</string>
+    <string name="level">Úroveň</string>
+    <string name="pref_ab_lux_max_label">Lux max</string>
+    <string name="pref_ab_brighness_label">Jas (20 &#8211; 255)</string>
+    <string name="pref_ab_number_error_general">Zadané číslo není platné</string>
+    <string name="pref_ab_brightness_too_low">Nedoporučuje se nastavit úroveň jasu menší než 20</string>
+    <string name="pref_ab_brightness_too_high">Úroveň jasu nesmí být větší než 255</string>
+    <string name="pref_ab_number_error_negative">Hodnoty nesmí být menší než nula</string>
+    <string name="pref_ab_number_not_ascending">Hodnoty na nižších úrovních nesmí být větší než hodnoty na vyšších úrovních</string>
+    <string name="pref_ab_number_not_descending">Hodnoty na vyšších úrovních nesmí být nižší než hodnoty na nižších úrovních</string>
+    <string name="pref_ab_values_set">Hodnoty pro %s nastaveny</string>
+    <string name="pref_ab_config_saved">Nová konfigurace automatického jasu byla uložena</string>
+    <string name="pref_ab_config_cancelled">Nová konfigurace automatického jasu NEBYLA uložena</string>
+
+    <!-- Lockscreen rotation -->
+    <string name="pref_lockscreen_rotation_title">Rotace obrazovky uzamčení</string>
+    <string name="pref_lockscreen_rotation_summary">POZOR: může přehodit zkratky odemykacího prstence na některých zařízeních, pokud byla obrazovka uzamčení modifikována výrobcem</string>
+
+    <!-- Lockscreen menu key -->
+    <string name="pref_lockscreen_menu_key_title">Povolit menu tlačítko</string>
+    <string name="pref_lockscreen_menu_key_summary">Povolí menu tlačítko pro rychlé odemknutí obrazovky uzamčení (vyžaduje restart)</string>
+
+    <!-- Fix messaging wakelock -->
+    <string name="pref_mms_fix_wakelock_title">Opravit wakelock zpráv</string>
+    <string name="pref_mms_fix_wakelock_summary">Zamezí zapnutí obrazovky při obdržení nové SMS / MMS zprávy (vyžaduje restart)</string>
+
+    <!-- Statusbar center clock -->
+    <string name="pref_statusbar_center_clock_title">Vycentrované hodiny</string>
+
+    <!-- Media tweaks category -->
+    <string name="pref_cat_media_title">Nastavení médií</string>
+    <string name="pref_cat_media_summary">Obsahuje různá nastavení týkající se médií a audio systému</string>
+
+    <!-- More music volume steps -->
+    <string name="pref_music_volume_steps_title">Více úrovní hlasitoti</string>
+    <string name="pref_music_volume_steps_summary">Přidá více úrovní hlasitosti pro stream hudby (vyžaduje restart)</string>
+
+    <!-- Safe headset media volume -->
+    <string name="pref_safe_media_volume_title">Bezpečná hlasitost pro headset</string>
+    <string name="pref_safe_media_volume_summary">Aktivuje nebo deaktivuje bezpečnou hlasitost pro headset</string>
+
+    <!-- Disable charging LED -->
+    <string name="pref_charging_led_disable_title">Vypnout LED nabíjení</string>
+    <string name="pref_charging_led_disable_summary">Vypne LED během nabíjení</string>
+
+    <!-- Hardware key actions -->
+    <string name="pref_cat_hwkey_actions_title">Akcie tlačítek</string>
+    <string name="pref_cat_hwkey_actions_summary">Umožňuje nastavení akcí pro hardvérová tlačítka</string>
+    <string name="pref_hwkey_menu_longpress_title">Dlouhé podržení Menu</string>
+    <string name="pref_hwkey_menu_doubletap_title">Dvojité klepnutí na Menu</string>
+    <string name="pref_hwkey_back_longpress_title">Dlouhé podržení Zpět</string>
+    <string name="hwkey_action_default">Výchozí</string>
+    <string name="hwkey_action_search">Vyhledávání</string>
+    <string name="hwkey_action_voice_search">Hlasové vyhledávání</string>
+    <string name="hwkey_action_prev_app">Přepnout na předcházející aplikaci</string>
+    <string name="hwkey_action_kill">Zabít aplikaci v popředí</string>
+    <string name="pref_hwkey_kill_delay_title">Zpoždění zabití aplikace</string>
+    <string name="pref_hwkey_kill_delay_summary">Vztahuje se na akci zabití aplikace v popředí dlouhým podržením tlačítka. Definuje, jak dlouho musí být tlačítko přidrženo aby došlo k provedení akce.</string>
+    <string name="pref_hwkey_doubletap_speed_title">Rychlost dvojitého klepnutí</string>
+    <string name="pref_hwkey_doubletap_speed_summary">Vztahuje se na dvojité klepnutí na Menu. Definuje, jak rychle musí být provedeno dvojité klepnutí aby došlo k provedení akce.</string>
+    <string name="app_killed">Aplikace zabita</string>
+    <string name="nothing_to_kill">Není co zabít</string>
+    <string name="no_previous_app_found">Žádná předcházející aplikace</string>
+
+    <!--  Phone tweaks category -->
+    <string name="pref_cat_phone_title">Nastavení telefonu</string>
+    <string name="pref_cat_phone_summary">Obsahuje různá nastavení týkající se telefonování</string>
+
+    <!-- Flip action while ringing -->
+    <string name="pref_phone_flip_title">Akce překlopení zařízení</string>
+    <string name="pref_phone_flip_summary">Umožňuje definovat akci, která se provede po překlopení zařízení obrazovkou dolů během vyzvánění</string>
+    <string name="phone_flip_action_none">Žádná akce</string>
+    <string name="phone_flip_action_mute">Ztlumit vyzvánění</string>
+    <string name="phone_flip_action_dismiss">Zrušit hovor</string>
+
+    <!-- Disable vibrate on call connect -->
+    <string name="pref_phone_call_connect_vibrate_disable_title">Zakázat vibrování při navázání hovoru</string>
+    <string name="pref_phone_call_connect_vibrate_disable_summary">Zakáže vibraci, která je provedena při navázání hovoru</string>
 
 </resources>

@@ -98,10 +98,37 @@ public class GravityBoxSettings extends Activity {
 
     public static final String PREF_KEY_BRIGHTNESS_MIN = "pref_brightness_min";
     public static final String PREF_KEY_AUTOBRIGHTNESS = "pref_autobrightness";
+    public static final String PREF_KEY_HOLO_BG_SOLID_BLACK = "pref_holo_bg_solid_black";
 
     public static final String PREF_KEY_VOL_MUSIC_CONTROLS = "pref_vol_music_controls";
     public static final String PREF_KEY_MUSIC_VOLUME_STEPS = "pref_music_volume_steps";
     public static final String PREF_KEY_SAFE_MEDIA_VOLUME = "pref_safe_media_volume";
+
+    public static final String PREF_KEY_HWKEY_MENU_LONGPRESS = "pref_hwkey_menu_longpress";
+    public static final String PREF_KEY_HWKEY_MENU_DOUBLETAP = "pref_hwkey_menu_doubletap";
+    public static final String PREF_KEY_HWKEY_BACK_LONGPRESS = "pref_hwkey_back_longpress";
+    public static final String PREF_KEY_HWKEY_DOUBLETAP_SPEED = "pref_hwkey_doubletap_speed";
+    public static final String PREF_KEY_HWKEY_KILL_DELAY = "pref_hwkey_kill_delay";
+    public static final int HWKEY_ACTION_DEFAULT = 0;
+    public static final int HWKEY_ACTION_SEARCH = 1;
+    public static final int HWKEY_ACTION_VOICE_SEARCH = 2;
+    public static final int HWKEY_ACTION_PREV_APP = 3;
+    public static final int HWKEY_ACTION_KILL = 4;
+    public static final int HWKEY_ACTION_SLEEP = 5;
+    public static final int HWKEY_DOUBLETAP_SPEED_DEFAULT = 400;
+    public static final int HWKEY_KILL_DELAY_DEFAULT = 1000;
+    public static final String ACTION_PREF_HWKEY_MENU_LONGPRESS_CHANGED = "gravitybox.intent.action.HWKEY_MENU_LONGPRESS_CHANGED";
+    public static final String ACTION_PREF_HWKEY_MENU_DOUBLETAP_CHANGED = "gravitybox.intent.action.HWKEY_MENU_DOUBLETAP_CHANGED";
+    public static final String ACTION_PREF_HWKEY_BACK_LONGPRESS_CHANGED = "gravitybox.intent.action.HWKEY_BACK_LONGPRESS_CHANGED";
+    public static final String ACTION_PREF_HWKEY_DOUBLETAP_SPEED_CHANGED = "gravitybox.intent.action.HWKEY_DOUBLETAP_SPEED_CHANGED";
+    public static final String ACTION_PREF_HWKEY_KILL_DELAY_CHANGED = "gravitybox.intent.action.HWKEY_KILL_DELAY_CHANGED";
+    public static final String EXTRA_HWKEY_VALUE = "hwKeyValue";
+
+    public static final String PREF_KEY_PHONE_FLIP = "pref_phone_flip";
+    public static final int PHONE_FLIP_ACTION_NONE = 0;
+    public static final int PHONE_FLIP_ACTION_MUTE = 1;
+    public static final int PHONE_FLIP_ACTION_DISMISS = 2;
+    public static final String PREF_KEY_PHONE_CALL_CONNECT_VIBRATE_DISABLE = "pref_phone_call_connect_vibrate_disable";
 
     public static final String ACTION_PREF_BATTERY_STYLE_CHANGED = "mediatek.intent.action.BATTERY_PERCENTAGE_SWITCH";
     public static final String ACTION_PREF_SIGNAL_ICON_AUTOHIDE_CHANGED = "gravitybox.intent.action.SIGNAL_ICON_AUTOHIDE_CHANGED";
@@ -128,7 +155,8 @@ public class GravityBoxSettings extends Activity {
             PREF_KEY_BRIGHTNESS_MIN,
             PREF_KEY_LOCKSCREEN_MENU_KEY,
             PREF_KEY_FIX_MMS_WAKELOCK,
-            PREF_KEY_MUSIC_VOLUME_STEPS
+            PREF_KEY_MUSIC_VOLUME_STEPS,
+            PREF_KEY_HOLO_BG_SOLID_BLACK
     ));
 
     @Override
@@ -159,6 +187,12 @@ public class GravityBoxSettings extends Activity {
         private File wallpaperImage;
         private File wallpaperTemporary;
         private EditTextPreference mPrefBrightnessMin;
+        private ListPreference mPrefHwKeyMenuLongpress;
+        private ListPreference mPrefHwKeyMenuDoubletap;
+        private ListPreference mPrefHwKeyBackLongpress;
+        private ListPreference mPrefHwKeyDoubletapSpeed;
+        private ListPreference mPrefHwKeyKillDelay;
+        private ListPreference mPrefPhoneFlip;
 
         @SuppressWarnings("deprecation")
         @Override
@@ -216,6 +250,14 @@ public class GravityBoxSettings extends Activity {
             wallpaperTemporary = new File(getActivity().getCacheDir() + "/lockwallpaper.tmp");
 
             mPrefBrightnessMin = (EditTextPreference) findPreference(PREF_KEY_BRIGHTNESS_MIN);
+
+            mPrefHwKeyMenuLongpress = (ListPreference) findPreference(PREF_KEY_HWKEY_MENU_LONGPRESS);
+            mPrefHwKeyMenuDoubletap = (ListPreference) findPreference(PREF_KEY_HWKEY_MENU_DOUBLETAP);
+            mPrefHwKeyBackLongpress = (ListPreference) findPreference(PREF_KEY_HWKEY_BACK_LONGPRESS);
+            mPrefHwKeyDoubletapSpeed = (ListPreference) findPreference(PREF_KEY_HWKEY_DOUBLETAP_SPEED);
+            mPrefHwKeyKillDelay = (ListPreference) findPreference(PREF_KEY_HWKEY_KILL_DELAY);
+
+            mPrefPhoneFlip = (ListPreference) findPreference(PREF_KEY_PHONE_FLIP);
         }
 
         @Override
@@ -270,6 +312,17 @@ public class GravityBoxSettings extends Activity {
             } else if (option.equals(LOCKSCREEN_BG_IMAGE)) {
                 mPrefCatLockscreenBg.addPreference(mPrefLockscreenBgImage);
             }
+
+            mPrefHwKeyMenuLongpress.setSummary(mPrefHwKeyMenuLongpress.getEntry());
+            mPrefHwKeyMenuDoubletap.setSummary(mPrefHwKeyMenuDoubletap.getEntry());
+            mPrefHwKeyBackLongpress.setSummary(mPrefHwKeyBackLongpress.getEntry());
+            mPrefHwKeyDoubletapSpeed.setSummary(getString(R.string.pref_hwkey_doubletap_speed_summary)
+                    + " (" + mPrefHwKeyDoubletapSpeed.getEntry() + ")");
+            mPrefHwKeyKillDelay.setSummary(getString(R.string.pref_hwkey_kill_delay_summary)
+                    + " (" + mPrefHwKeyKillDelay.getEntry() + ")");
+
+            mPrefPhoneFlip.setSummary(getString(R.string.pref_phone_flip_summary)
+                    + " (" + mPrefPhoneFlip.getEntry() + ")");
         }
 
         @Override
@@ -300,6 +353,26 @@ public class GravityBoxSettings extends Activity {
                 intent.setAction(ACTION_PREF_SAFE_MEDIA_VOLUME_CHANGED);
                 intent.putExtra(EXTRA_SAFE_MEDIA_VOLUME_ENABLED,
                         prefs.getBoolean(PREF_KEY_SAFE_MEDIA_VOLUME, false));
+            } else if (key.equals(PREF_KEY_HWKEY_MENU_LONGPRESS)) {
+                intent.setAction(ACTION_PREF_HWKEY_MENU_LONGPRESS_CHANGED);
+                intent.putExtra(EXTRA_HWKEY_VALUE, Integer.valueOf(
+                        prefs.getString(PREF_KEY_HWKEY_MENU_LONGPRESS, "0")));
+            } else if (key.equals(PREF_KEY_HWKEY_MENU_DOUBLETAP)) {
+                intent.setAction(ACTION_PREF_HWKEY_MENU_DOUBLETAP_CHANGED);
+                intent.putExtra(EXTRA_HWKEY_VALUE, Integer.valueOf(
+                        prefs.getString(PREF_KEY_HWKEY_MENU_DOUBLETAP, "0")));
+            } else if (key.equals(PREF_KEY_HWKEY_BACK_LONGPRESS)) {
+                intent.setAction(ACTION_PREF_HWKEY_BACK_LONGPRESS_CHANGED);
+                intent.putExtra(EXTRA_HWKEY_VALUE, Integer.valueOf(
+                        prefs.getString(PREF_KEY_HWKEY_BACK_LONGPRESS, "0")));
+            } else if (key.equals(PREF_KEY_HWKEY_DOUBLETAP_SPEED)) {
+                intent.setAction(ACTION_PREF_HWKEY_DOUBLETAP_SPEED_CHANGED);
+                intent.putExtra(EXTRA_HWKEY_VALUE, Integer.valueOf(
+                        prefs.getString(PREF_KEY_HWKEY_DOUBLETAP_SPEED, "400")));
+            } else if (key.equals(PREF_KEY_HWKEY_KILL_DELAY)) {
+                intent.setAction(ACTION_PREF_HWKEY_KILL_DELAY_CHANGED);
+                intent.putExtra(EXTRA_HWKEY_VALUE, Integer.valueOf(
+                        prefs.getString(PREF_KEY_HWKEY_KILL_DELAY, "1000")));
             }
             if (intent.getAction() != null) {
                 getActivity().sendBroadcast(intent);
