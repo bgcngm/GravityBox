@@ -1,5 +1,6 @@
 package com.ceco.gm2.gravitybox;
 
+import android.content.res.XModuleResources;
 import android.content.res.XResources;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -10,13 +11,26 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class GravityBox implements IXposedHookZygoteInit, IXposedHookInitPackageResources, IXposedHookLoadPackage {
     public static final String PACKAGE_NAME = GravityBox.class.getPackage().getName();
+    public static String MODULE_PATH = null;
     private static XSharedPreferences prefs;
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
+        MODULE_PATH = startupParam.modulePath;
         prefs = new XSharedPreferences(PACKAGE_NAME);
+        XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, null);
 
         XResources.setSystemWideReplacement("android", "bool", "config_animateScreenLights", true);
+
+        if (prefs.getBoolean(GravityBoxSettings.PREF_KEY_HOLO_BG_SOLID_BLACK, false)) {
+            XResources.setSystemWideReplacement(
+                "android", "drawable", "background_holo_dark", modRes.fwd(R.drawable.background_holo_dark_solid));
+        } else {
+            XResources.setSystemWideReplacement(
+                    "android", "drawable", "background_holo_dark", modRes.fwd(R.drawable.background_holo_dark));
+        }
+        XResources.setSystemWideReplacement(
+                "android", "drawable", "background_holo_light", modRes.fwd(R.drawable.background_holo_light));
 
         FixTraceFlood.initZygote();
         ModVolumeKeySkipTrack.init(prefs);
@@ -43,6 +57,8 @@ public class GravityBox implements IXposedHookZygoteInit, IXposedHookInitPackage
         }
 
         ModAudio.initZygote(prefs);
+        ModHwKeys.initZygote(prefs);
+        PatchMasterKey.initZygote();
     }
 
     @Override
@@ -53,6 +69,10 @@ public class GravityBox implements IXposedHookZygoteInit, IXposedHookInitPackage
 
         if (resparam.packageName.equals(ModCenterClock.PACKAGE_NAME)) {
             ModCenterClock.initResources(prefs, resparam);
+        }
+
+        if (resparam.packageName.equals(FixDevOptions.PACKAGE_NAME)) {
+            FixDevOptions.initPackageResources(prefs, resparam);
         }
     }
 
@@ -112,6 +132,14 @@ public class GravityBox implements IXposedHookZygoteInit, IXposedHookInitPackage
 
         if (lpparam.packageName.equals(ModCenterClock.PACKAGE_NAME)) {
             ModCenterClock.init(prefs, lpparam.classLoader);
+        }
+
+        if (lpparam.packageName.equals(ModPhone.PACKAGE_NAME)) {
+            ModPhone.init(prefs, lpparam.classLoader);
+        }
+
+        if (lpparam.packageName.equals(ModSettings.PACKAGE_NAME)) {
+            ModSettings.init(prefs, lpparam.classLoader);
         }
     }
 }
