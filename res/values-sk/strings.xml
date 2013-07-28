@@ -6,8 +6,7 @@
     <string name="battery_style_title">Štýl indikátora batérie</string>	
     <string name="battery_style_stock">Základný</string>
     <string name="battery_style_circle">Kruhový s percentami</string>
-    <string name="battery_style_percent">Textový s percentami</string>
-    <string name="battery_style_percent_stock">Textový s percentami a ikonou</string>
+    <string name="battery_style_percent">Percentuálny text stavu batérie</string>
     <string name="battery_style_none">Žiadny</string>
 
     <string name="vol_music_controls_title">Ovládanie hudby tlačidlami hlasitosti</string>
@@ -28,8 +27,8 @@
     <string name="sim_disable_notifications">Vypnúť \"SIM nie je vložená\" hlásenia</string>
     <string name="sim_disable_notifications_summary">\"SIM nie je vložená\" hlásenia vypnuté</string>
 
-    <string name="poweroff_advanced_title">Rozšírené menu napájania</string>
-    <string name="poweroff_advanced_summary">Umožní rozšírené menu napájania s možnosťou reštartu a reštartu do recovery</string>
+    <string name="poweroff_advanced_title">Rozšírené reštart menu</string>
+    <string name="poweroff_advanced_summary">Aktivuje rozšírené reštart menu s možnosťou reštartu do recovery</string>
     <string name="poweroff_recovery">Recovery</string>    
 
     <string name="vol_key_cursor_control_title">Pohyb kurzora tlačidlami hlasitosti</string>
@@ -68,6 +67,11 @@
     <string name="quick_settings_torch_on">Svetlo zap</string>
     <string name="quick_settings_torch_off">Svetlo vyp</string>
     <string name="quick_settings_torch_off_notif">Dotykom vypnete svetlo</string>
+    <string name="quick_settings_qr_playing">Prehrávam&#8230;</string>
+    <string name="quick_settings_qr_recording">Zaznamenávam&#8230;</string>
+    <string name="quick_settings_qr_recorded">Zaznamenané</string>
+    <string name="quick_settings_qr_record">Podržte pre záznam</string>
+    <string name="quick_settings_qr_recording_notif">Dotykom zastavíte záznam</string>
 
     <!--  QuickSettings settings -->
     <string name="quick_settings_title">Dlaždice QuickSettings panelu</string>
@@ -89,6 +93,8 @@
     <string name="qs_tile_wifi_ap">Wi-Fi Prístupový Bod</string>
     <string name="qs_tile_torch">Svetlo</string>
     <string name="qs_tile_gravitybox">GravityBox</string>
+    <string name="qs_tile_sleep">Uspať</string>
+    <string name="qs_tile_quickrecord">Rýchly záznam zvuku</string>
 
     <!-- Color Picker -->
     <string name="dialog_color_picker">Výber farby</string>
@@ -163,5 +169,130 @@
     <!--  Low battery LED flashing -->
     <string name="pref_flashing_led_disable_title">Vypnúť blikanie LED</string>
     <string name="pref_flashing_led_disable_summary">Vypne otravné blikanie LED, ktoré je aktívne v prípade nízkej úrovne batérie</string>
+
+    <!-- Display tweaks category -->
+    <string name="pref_cat_display_title">Nastavenia obrazovky</string>
+    <string name="pref_cat_display_summary">Obsahuje rôzne nastavenia týkajúce sa obrazovky</string>
+
+    <!-- Minimum brightness level -->
+    <string name="pref_brightness_min_title">Minimálna úroveň jasu</string>
+    <string name="pref_brightness_min_summary">Umožňuje nastaviť minimálnu úroveň jasu pre manuálne nastavenie jasu (vyžaduje reštart)</string>
+    <string name="pref_brightness_dlg_msg">Hodnota z intervalu: 20 &#8211; 80</string>
+
+    <!--  Autobrightness levels -->
+    <string name="pref_ab_title">Úrovne automatického jasu</string>
+    <string name="pref_ab_summary">Umožňuje nastaviť úrovne svetla prostredia a zodpovedajúce úrovne podsvietenia obrazovky</string>
+    <string name="level">Úroveň</string>
+    <string name="pref_ab_lux_max_label">Lux max</string>
+    <string name="pref_ab_brighness_label">Jas (20 &#8211; 255)</string>
+    <string name="pref_ab_number_error_general">Zadané číslo nie je platné</string>
+    <string name="pref_ab_brightness_too_low">Neodporúča sa nastaviť úroveň jasu menšiu ako 20</string>
+    <string name="pref_ab_brightness_too_high">Úroveň jasu nesmie byť väčšia ako 255</string>
+    <string name="pref_ab_number_error_negative">Hodnoty nesmú byť menšie ako nula</string>
+    <string name="pref_ab_number_not_ascending">Hodnoty na nižších úrovniach nesmú byť väčšie ako hodnoty na vyšších úrovniach</string>
+    <string name="pref_ab_number_not_descending">Hodnoty na vyšších úrovniach nesmú byť menšie ako hodnoty na nižších úrovniach</string>
+    <string name="pref_ab_values_set">Hodnoty pre %s nastavené</string>
+    <string name="pref_ab_config_saved">Nová konfigurácia automatického jasu bola uložená</string>
+    <string name="pref_ab_config_cancelled">Nová konfigurácia automatického jasu NEBOLA uložená</string>
+
+    <!-- Lockscreen rotation -->
+    <string name="pref_lockscreen_rotation_title">Rotácia obrazovky uzamknutia</string>
+    <string name="pref_lockscreen_rotation_summary">POZOR: môže prehodiť skratky odomykacieho prstenca na niektorých zariadeniach, ak bola obrazovka uzamknutia modifikovaná výrobcom</string>
+
+    <!-- Lockscreen menu key -->
+    <string name="pref_lockscreen_menu_key_title">Povoliť menu tlačidlo</string>
+    <string name="pref_lockscreen_menu_key_summary">Povolí menu tlačidlo pre rýchle odomknutie obrazovky uzamknutia (vyžaduje reštart)</string>
+
+    <!-- Fix messaging wakelock -->
+    <string name="pref_mms_fix_wakelock_title">Opraviť wakelock správ</string>
+    <string name="pref_mms_fix_wakelock_summary">Zamedzí zapnutiu obrazovky pri obdržaní novej SMS/MMS správy (vyžaduje reštart)</string>
+
+    <!-- Statusbar center clock -->
+    <string name="pref_statusbar_center_clock_title">Vycentrované hodiny</string>
+
+    <!-- Media tweaks category -->
+    <string name="pref_cat_media_title">Nastavenia médií</string>
+    <string name="pref_cat_media_summary">Obsahuje rôzne nastavenia týkajúce sa médií a audio systému</string>
+
+    <!-- More music volume steps -->
+    <string name="pref_music_volume_steps_title">Viac úrovní hlasitoti</string>
+    <string name="pref_music_volume_steps_summary">Pridá viac úrovní hlasitosti pre stream hudby (vyžaduje reštart)</string>
+
+    <!-- Safe headset media volume -->
+    <string name="pref_safe_media_volume_title">Bezpečná hlasitosť pre headset</string>
+    <string name="pref_safe_media_volume_summary">Aktivuje alebo deaktivuje bezpečnú hlasitosť pre headset</string>
+
+    <!-- Disable charging LED -->
+    <string name="pref_charging_led_disable_title">Vypnúť LED nabíjania</string>
+    <string name="pref_charging_led_disable_summary">Vypne LED počas nabíjania</string>
+
+    <!-- Hardware key actions -->
+    <string name="pref_cat_hwkey_actions_title">Akcie tlačidiel</string>
+    <string name="pref_cat_hwkey_actions_summary">Umožňuje nastavenie akcií pre hardvérové tlačidlá</string>
+    <string name="pref_hwkey_menu_longpress_title">Dlhé podržanie Menu</string>
+    <string name="pref_hwkey_menu_doubletap_title">Dvojité ťuknutie na Menu</string>
+    <string name="pref_hwkey_back_longpress_title">Dlhé podržanie Späť</string>
+    <string name="hwkey_action_default">Predvolené</string>
+    <string name="hwkey_action_search">Vyhľadávanie</string>
+    <string name="hwkey_action_voice_search">Hlasové vyhľadávanie</string>
+    <string name="hwkey_action_prev_app">Prepnúť na predošlú aplikáciu</string>
+    <string name="hwkey_action_kill">Zabiť aplikáciu v popredí</string>
+    <string name="hwkey_action_sleep">Uspať</string> 
+    <string name="pref_hwkey_kill_delay_title">Oneskorenie zabitia aplikácie</string>
+    <string name="pref_hwkey_kill_delay_summary">Vzťahuje sa na akciu zabitia aplikácie v popredí dlhým podržaním tlačidla. Definuje, ako dlho musí byť tlačidlo podržané aby došlo k vykonaniu akcie.</string>
+    <string name="pref_hwkey_doubletap_speed_title">Rýchlosť dvojitého ťuknutia</string>
+    <string name="pref_hwkey_doubletap_speed_summary">Vzťahuje sa na dvojité ťuknutie na Menu. Definuje, ako rýchlo musí byť vykonané dvojité ťuknutie aby došlo k vykonaniu akcie.</string>
+    <string name="app_killed">Aplikácia zabitá</string>
+    <string name="nothing_to_kill">Nie je čo zabiť</string>
+    <string name="no_previous_app_found">Žiadna predošlá aplikácia</string>
+
+    <!--  Phone tweaks category -->
+    <string name="pref_cat_phone_title">Nastavenia telefónu</string>
+    <string name="pref_cat_phone_summary">Obsahuje rôzne nastavenia týkajúce sa telefonovania</string>
+
+    <!-- Flip action while ringing -->
+    <string name="pref_phone_flip_title">Akcia preklopenia zariadenia</string>
+    <string name="pref_phone_flip_summary">Umožňuje definovať akciu, ktorá sa vykoná po preklopení zariadenia obrazovkou nadol počas vyzváňania</string>
+    <string name="phone_flip_action_none">Žiadna akcia</string>
+    <string name="phone_flip_action_mute">Stlmiť zvonenie</string>
+    <string name="phone_flip_action_dismiss">Zrušiť hovor</string>
+
+    <!-- Disable vibrate on call connect -->
+    <string name="pref_phone_call_connect_vibrate_disable_title">Zakázať vibrovanie pri nadviazaní hovoru</string>
+    <string name="pref_phone_call_connect_vibrate_disable_summary">Zakáže vibráciu, ktorá je vykonaná pri nadviazaní hovoru</string>
+
+    <!--  Solid black Holo background -->
+    <string name="pref_holo_bg_solid_black_title">Plné čierne pozadie</string>
+    <string name="pref_holo_bg_solid_black_summary">Nahradí štandardné čierno-šedé pozadie (gradient) plnou čiernou farbou (vyžaduje reštart)</string>
+
+    <!-- QuickSettings tiles per row -->
+    <string name="pref_qs_tiles_per_row_title">Počet dlaždíc na riadok</string>
+    <string name="pref_qs_tiles_per_row_summary">Definuje počet QuickSettings dlaždíc zobrazených na 1 riadok. Veľkosť dlaždíc bude upravená podľa potreby. Aplikovateľné na portrét režim.</string>
+
+    <!--  Status bar clock - show day of week -->
+    <string name="pref_statusbar_clock_dow_title">Zobraziť deň v týždni</string>
+
+    <!-- Expandable volume panel -->
+    <string name="pref_volume_panel_expandable_title">Rozšíriteľné nastavenie hlasitosti</string>
+    <string name="pref_volume_panel_expandable_summary">Umožňuje rozšíriť panel nastavenia hlasitosti, v ktorom je možné nastaviť hlasitosti zvlášť pre každý zvukový tok</string>
+
+    <!-- Link ringtone & notifications volumes -->
+    <string name="pref_link_volumes_title">Spojiť hlasitosť vyzváňania a notifikácií</string>
+    <string name="pref_link_volumes_summary">Ak je vypnuté, umožňuje nastaviť úrovne hlasitosti zvlášť pre vyzváňanie a notifikácie</string>
+
+    <!-- Auto-switch QuickSettings -->
+    <string name="pref_auto_switch_qs_title">Automatické zobrazenie QuickSettings</string>
+    <string name="pref_auto_switch_qs_summary">QuickSettings budú zobrazené automaticky ak sa v notifikačnom panely nenachádzajú žiadne notifikácie</string>
+
+    <!-- Quick pulldown -->
+    <string name="pref_quick_pulldown_title">Rýchle zobrazenie QuickSettings</string>
+    <string name="pref_quick_pulldown_summary">Stiahnutie stavového riadku v oblasti definovaného okraja zobrazí QuickSettings</string>
+    <string name="quick_pulldown_off">Vypnuté</string>
+    <string name="quick_pulldown_right">Pravý okraj</string>
+    <string name="quick_pulldown_left">Ľavý okraj</string>
+
+    <!-- Disable volume rocker wake -->
+    <string name="pref_volume_rocker_wake_disable_title">Zakázať zobúdzanie tlačidlami hlasitosti</string>
+    <string name="pref_volume_rocker_wake_disable_summary">Pre zariadenia ako Jiayu G3s,G4, kde tlačidlá hlasitosti zobúdzajú zariadenie</string>
 
 </resources>
