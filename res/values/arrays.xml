@@ -4,8 +4,7 @@
     <string-array name="battery_style_entries" translatable="false">
         <item>@string/battery_style_stock</item>
         <item>@string/battery_style_circle</item>
-        <item>@string/battery_style_percent</item>
-        <item>@string/battery_style_percent_stock</item>
+        <item>@string/battery_style_circle_percent</item>
         <item>@string/battery_style_none</item>
     </string-array>
 
@@ -13,7 +12,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
         <item>0</item>
     </string-array>
 
@@ -74,6 +72,8 @@
         <item>@string/qs_tile_sync</item>
         <item>@string/qs_tile_wifi_ap</item>
         <item>@string/qs_tile_torch</item>
+        <item>@string/qs_tile_sleep</item>
+        <item>@string/qs_tile_quickrecord</item>
         <item>@string/qs_tile_gravitybox</item>
     </string-array>
 
@@ -94,6 +94,46 @@
         <item>sync_tileview</item>
         <item>wifi_ap_tileview</item>
         <item>torch_tileview</item>
+        <item>sleep_tileview</item>
+        <item>quickrecord_tileview</item>
+        <item>gravitybox_tileview</item>
+    </string-array>
+
+    <string-array name="qs_tile_aosp_entries" translatable="false">
+        <item>@string/qs_tile_user_profile</item>
+        <item>@string/qs_tile_brightness</item>
+        <item>@string/qs_tile_settings</item>
+        <item>@string/qs_tile_wifi</item>
+        <item>@string/qs_tile_data_usage</item>
+        <item>@string/qs_tile_autorotation</item>
+        <item>@string/qs_tile_battery</item>
+        <item>@string/qs_tile_airplane_mode</item>
+        <item>@string/qs_tile_bluetooth</item>
+        <item>@string/qs_tile_network_mode</item>
+        <item>@string/qs_tile_sync</item>
+        <item>@string/qs_tile_wifi_ap</item>
+        <item>@string/qs_tile_torch</item>
+        <item>@string/qs_tile_sleep</item>
+        <item>@string/qs_tile_quickrecord</item>
+        <item>@string/qs_tile_gravitybox</item>
+    </string-array>
+
+    <string-array name="qs_tile_aosp_values" translatable="false">
+        <item>user_textview</item>
+        <item>brightness_textview</item>
+        <item>settings</item>
+        <item>wifi_textview</item>
+        <item>rssi_textview</item>
+        <item>auto_rotate_textview</item>
+        <item>battery_textview</item>
+        <item>airplane_mode_textview</item>
+        <item>bluetooth_textview</item>
+        <item>network_mode_tileview</item>
+        <item>sync_tileview</item>
+        <item>wifi_ap_tileview</item>
+        <item>torch_tileview</item>
+        <item>sleep_tileview</item>
+        <item>quickrecord_tileview</item>
         <item>gravitybox_tileview</item>
     </string-array>
 
@@ -107,6 +147,228 @@
         <item>default</item>
         <item>color</item>
         <item>image</item>
+    </string-array>
+
+    <string-array name="hwkey_action_entries" tanslatable="false">
+        <item>@string/hwkey_action_default</item>
+        <item>@string/hwkey_action_search</item>
+        <item>@string/hwkey_action_voice_search</item>
+        <item>@string/hwkey_action_prev_app</item>
+        <item>@string/hwkey_action_kill</item>
+        <item>@string/hwkey_action_sleep</item>
+    </string-array>
+
+    <string-array name="hwkey_action_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="hwkey_doubletap_speed_entries" translatable="false">
+        <item>200ms</item>
+        <item>300ms</item>
+        <item>400ms</item>
+        <item>500ms</item>
+    </string-array>
+
+    <string-array name="hwkey_doubletap_speed_values" translatable="false">
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+    </string-array>
+
+    <string-array name="hwkey_kill_delay_entries" translatable="false">
+        <item>500ms</item>
+        <item>1000ms</item>
+        <item>1500ms</item>
+        <item>2000ms</item>
+    </string-array>
+
+    <string-array name="hwkey_kill_delay_values" translatable="false">
+        <item>500</item>
+        <item>1000</item>
+        <item>1500</item>
+        <item>2000</item>
+    </string-array>
+
+    <string-array name="phone_flip_action_entries" translatable="false">
+        <item>@string/phone_flip_action_none</item>
+        <item>@string/phone_flip_action_mute</item>
+        <item>@string/phone_flip_action_dismiss</item>
+    </string-array>
+
+    <string-array name="phone_flip_action_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="qs_tiles_per_row_entries" translatable="false">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="qs_tiles_per_row_values" translatable="false">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <!-- Titles for window animation scale preference. [CHAR LIMIT=35] -->
+    <string-array name="window_animation_scale_entries">
+        <item>Animation off</item>
+        <item>Animation scale .25x</item>
+        <item>Animation scale .5x</item>
+        <item>Animation scale 1x</item>
+        <item>Animation scale 1.5x</item>
+        <item>Animation scale 2x</item>
+        <item>Animation scale 5x</item>
+        <item>Animation scale 10x</item>
+    </string-array>
+
+    <!-- Values for window animation scale preference. -->
+    <string-array name="window_animation_scale_values" translatable="false" >
+        <item>0</item>
+        <item>.25</item>
+        <item>.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+
+    <!-- Titles for transition animation scale preference. [CHAR LIMIT=35] -->
+    <string-array name="transition_animation_scale_entries">
+        <item>Animation off</item>
+        <item>Animation scale .25x</item>
+        <item>Animation scale .5x</item>
+        <item>Animation scale 1x</item>
+        <item>Animation scale 1.5x</item>
+        <item>Animation scale 2x</item>
+        <item>Animation scale 5x</item>
+        <item>Animation scale 10x</item>
+    </string-array>
+
+    <!-- Values for transition animation scale preference. -->
+    <string-array name="transition_animation_scale_values" translatable="false" >
+        <item>0</item>
+        <item>.25</item>
+        <item>.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+
+    <!-- Titles for animator duration scale preference. [CHAR LIMIT=35] -->
+    <string-array name="animator_duration_scale_entries">
+        <item>Animation off</item>
+        <item>Animation scale .25x</item>
+        <item>Animation scale .5x</item>
+        <item>Animation scale 1x</item>
+        <item>Animation scale 1.5x</item>
+        <item>Animation scale 2x</item>
+        <item>Animation scale 5x</item>
+        <item>Animation scale 10x</item>
+    </string-array>
+
+    <!-- Values for animator duration scale preference. -->
+    <string-array name="animator_duration_scale_values" translatable="false" >
+        <item>0</item>
+        <item>.25</item>
+        <item>.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="quick_pulldown_entries" translatable="false">
+        <item>@string/quick_pulldown_off</item>
+        <item>@string/quick_pulldown_right</item>
+        <item>@string/quick_pulldown_left</item>
+    </string-array>
+
+    <string-array name="quick_pulldown_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="notif_background_entries" translatable="false">
+        <item>@string/notif_background_default</item>
+        <item>@string/notif_background_color_fill</item>
+        <item>@string/notif_background_custom_image</item>
+    </string-array>
+
+    <string-array name="notif_background_values" translatable="false">
+        <item>default</item>
+        <item>color</item>
+        <item>image</item>
+    </string-array>
+
+    <string-array name="notif_color_mode_entries" translatable="false">
+        <item>@string/color_fill_overlay</item>
+        <item>@string/color_fill_underlay</item>
+    </string-array>
+
+    <string-array name="notif_color_mode_values" translatable="false">
+        <item>overlay</item>
+        <item>underlay</item>
+    </string-array>
+
+    <string-array name="pie_control_trigger_position_entries" translatable="false">
+        <item>@string/pie_control_trigger_left</item>
+        <item>@string/pie_control_trigger_bottom</item>
+        <item>@string/pie_control_trigger_right</item>
+        <item>@string/pie_control_trigger_top</item>
+    </string-array>
+
+    <string-array name="pie_control_trigger_position_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="pie_control_trigger_position_default" translatable="false">
+        <item>2</item>
+    </string-array>
+
+    <string-array name="button_backlight_mode_entries" translatable="false">
+        <item>@string/button_backlight_mode_default</item>
+        <item>@string/button_backlight_mode_disable</item>
+        <item>@string/button_backlight_mode_always_on</item>
+    </string-array>
+
+    <string-array name="button_backlight_mode_values" translatable="false">
+        <item>default</item>
+        <item>disable</item>
+        <item>always_on</item>
+    </string-array>
+
+    <string-array name="recents_clear_entries" translatable="false">
+        <item>@string/recent_clear_off</item>
+        <item>@string/recent_clear_top_left</item>
+        <item>@string/recent_clear_top_right</item>
+        <item>@string/recent_clear_bottom_left</item>
+        <item>@string/recent_clear_bottom_right</item>
+    </string-array>
+
+    <string-array name="recents_clear_values" translatable="false">
+        <item>0</item>
+        <item>51</item>
+        <item>53</item>
+        <item>83</item>
+        <item>85</item>
     </string-array>
 
 </resources>

@@ -1,7 +1,7 @@
 package com.ceco.gm2.gravitybox.quicksettings;
 
-import com.ceco.gm2.gravitybox.GeminiPhoneWrapper;
-import com.ceco.gm2.gravitybox.GravityBox;
+import com.ceco.gm2.gravitybox.PhoneWrapper;
+import com.ceco.gm2.gravitybox.R;
 
 import de.robv.android.xposed.XposedBridge;
 
@@ -20,6 +20,7 @@ public class NetworkModeTile extends AQuickSettingsTile {
 
     private TextView mTextView;
     private int mNetworkType;
+    private int mDefaultNetworkType;
 
     private static void log(String message) {
         XposedBridge.log(TAG + ": " + message);
@@ -34,13 +35,13 @@ public class NetworkModeTile extends AQuickSettingsTile {
         public void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
-                    Settings.Global.getUriFor(GeminiPhoneWrapper.PREFERRED_NETWORK_MODE), false, this);
+                    Settings.Global.getUriFor(PhoneWrapper.PREFERRED_NETWORK_MODE), false, this);
         }
 
         @Override
         public void onChange(boolean selfChange) {
             mNetworkType = Settings.Global.getInt(mContext.getContentResolver(), 
-                    GeminiPhoneWrapper.PREFERRED_NETWORK_MODE, GeminiPhoneWrapper.NT_WCDMA_PREFERRED);
+                    PhoneWrapper.PREFERRED_NETWORK_MODE, PhoneWrapper.NT_WCDMA_PREFERRED);
             log("SettingsObserver onChange; mNetworkType = " + mNetworkType);
             updateResources();
         }
@@ -53,42 +54,50 @@ public class NetworkModeTile extends AQuickSettingsTile {
             
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(GeminiPhoneWrapper.ACTION_CHANGE_NETWORK_TYPE);
+                Intent i = new Intent(PhoneWrapper.ACTION_CHANGE_NETWORK_TYPE);
                 switch (mNetworkType) {
-                    case GeminiPhoneWrapper.NT_WCDMA_PREFERRED:
-                    case GeminiPhoneWrapper.NT_GSM_WCDMA_AUTO:
-                        i.putExtra(GeminiPhoneWrapper.EXTRA_NETWORK_TYPE, 
-                                GeminiPhoneWrapper.NT_GSM_ONLY);
+                    case PhoneWrapper.NT_WCDMA_PREFERRED:
+                    case PhoneWrapper.NT_GSM_WCDMA_AUTO:
+                        i.putExtra(PhoneWrapper.EXTRA_NETWORK_TYPE, 
+                                PhoneWrapper.NT_GSM_ONLY);
                         break;
-                    case GeminiPhoneWrapper.NT_WCDMA_ONLY:
-                        i.putExtra(GeminiPhoneWrapper.EXTRA_NETWORK_TYPE, 
-                                GeminiPhoneWrapper.NT_WCDMA_PREFERRED);
+                    case PhoneWrapper.NT_WCDMA_ONLY:
+                        i.putExtra(PhoneWrapper.EXTRA_NETWORK_TYPE, 
+                                PhoneWrapper.NT_WCDMA_PREFERRED);
                         break;
-                    case GeminiPhoneWrapper.NT_GSM_ONLY:
-                        i.putExtra(GeminiPhoneWrapper.EXTRA_NETWORK_TYPE, 
-                                GeminiPhoneWrapper.NT_WCDMA_ONLY);
+                    case PhoneWrapper.NT_GSM_ONLY:
+                        i.putExtra(PhoneWrapper.EXTRA_NETWORK_TYPE, 
+                                hasLte() ? mDefaultNetworkType : PhoneWrapper.NT_WCDMA_ONLY);
+                        break;
+                    default:
+                        if (hasLte()) {
+                            i.putExtra(PhoneWrapper.EXTRA_NETWORK_TYPE, 
+                                    PhoneWrapper.NT_GSM_ONLY);
+                        } else {
+                            log("onClick: Unknown or unsupported network type: mNetworkType = " + mNetworkType);
+                        }
                         break;
                 }
-                mContext.sendBroadcast(i);
+                if (i.hasExtra(PhoneWrapper.EXTRA_NETWORK_TYPE)) {
+                    mContext.sendBroadcast(i);
+                }
             }
         };
     }
 
     @Override
     protected void onTileCreate() {
-        mLabel = mGbResources.getString(mGbResources.getIdentifier(
-                "qs_tile_network_mode", "string", GravityBox.PACKAGE_NAME));
+        mLabel = mGbResources.getString(R.string.qs_tile_network_mode);
 
-        int mTileLayoutId = mGbResources.getIdentifier(
-                "quick_settings_tile_network_mode", "layout", GravityBox.PACKAGE_NAME);
         LayoutInflater inflater = LayoutInflater.from(mGbContext);
-        inflater.inflate(mTileLayoutId, mTile);
+        inflater.inflate(R.layout.quick_settings_tile_network_mode, mTile);
 
-        mTextView = (TextView) mTile.findViewById(
-                mGbResources.getIdentifier("network_mode_tileview", "id", GravityBox.PACKAGE_NAME));
+        mTextView = (TextView) mTile.findViewById(R.id.network_mode_tileview);
 
+        mDefaultNetworkType = PhoneWrapper.getDefaultNetworkType();
         mNetworkType = Settings.Global.getInt(mContext.getContentResolver(), 
-                GeminiPhoneWrapper.PREFERRED_NETWORK_MODE, GeminiPhoneWrapper.NT_WCDMA_PREFERRED);
+                PhoneWrapper.PREFERRED_NETWORK_MODE, mDefaultNetworkType);
+
         SettingsObserver observer = new SettingsObserver(new Handler());
         observer.observe();
     }
@@ -97,22 +106,32 @@ public class NetworkModeTile extends AQuickSettingsTile {
     protected synchronized void updateTile() {
 
         switch (mNetworkType) {
-            case GeminiPhoneWrapper.NT_WCDMA_PREFERRED:
-            case GeminiPhoneWrapper.NT_GSM_WCDMA_AUTO:
-                mDrawableId = mGbResources.getIdentifier(
-                        "ic_qs_2g3g_on", "drawable", GravityBox.PACKAGE_NAME);
+            case PhoneWrapper.NT_WCDMA_PREFERRED:
+            case PhoneWrapper.NT_GSM_WCDMA_AUTO:
+                mDrawableId = R.drawable.ic_qs_2g3g_on;
                 break;
-            case GeminiPhoneWrapper.NT_WCDMA_ONLY:
-                mDrawableId = mGbResources.getIdentifier(
-                        "ic_qs_3g_on", "drawable", GravityBox.PACKAGE_NAME);
+            case PhoneWrapper.NT_WCDMA_ONLY:
+                mDrawableId = R.drawable.ic_qs_3g_on;
                 break;
-            case GeminiPhoneWrapper.NT_GSM_ONLY:
-                mDrawableId = mGbResources.getIdentifier(
-                        "ic_qs_2g_on", "drawable", GravityBox.PACKAGE_NAME);
+            case PhoneWrapper.NT_GSM_ONLY:
+                mDrawableId = R.drawable.ic_qs_2g_on;
+                break;
+            default:
+                if (mNetworkType < PhoneWrapper.NT_MODE_UNKNOWN) {
+                    mDrawableId = R.drawable.ic_qs_3g_on;
+                } else {
+                    mDrawableId = R.drawable.ic_qs_unexpected_network;
+                    log("updateTile: Unknown or unsupported network type: mNetworkType = " + mNetworkType);
+                }
                 break;
         }
 
         mTextView.setText(mLabel);
         mTextView.setCompoundDrawablesWithIntrinsicBounds(0, mDrawableId, 0, 0);
+    }
+
+    private boolean hasLte() {
+        return (mDefaultNetworkType >= PhoneWrapper.NT_LTE_CDMA_EVDO && 
+                mDefaultNetworkType < PhoneWrapper.NT_MODE_UNKNOWN);
     }
 }

@@ -1,5 +1,9 @@
 package com.ceco.gm2.gravitybox;
 
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
@@ -11,6 +15,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.format.DateFormat;
+import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +44,7 @@ public class ModCenterClock {
     private static int mAnimFadeIn;
     private static boolean mClockCentered = false;
     private static int mClockOriginalPaddingLeft;
+    private static boolean mClockShowDow = false;
 
     private static void log(String message) {
         XposedBridge.log(TAG + ": " + message);
@@ -48,17 +57,25 @@ public class ModCenterClock {
             log("Broadcast received: " + intent.toString());
             if (intent.getAction().equals(GravityBoxSettings.ACTION_PREF_CENTER_CLOCK_CHANGED)) {
                 setClockPosition(intent.getBooleanExtra(GravityBoxSettings.EXTRA_CENTER_CLOCK, false));
+            } else if (intent.getAction().equals(GravityBoxSettings.ACTION_PREF_CLOCK_DOW)) {
+                mClockShowDow = intent.getBooleanExtra(GravityBoxSettings.EXTRA_CLOCK_DOW, false);
+                if (mClock != null) {
+                    XposedHelpers.callMethod(mClock, "updateClock");
+                }
             }
         }
     };
 
     public static void initResources(final XSharedPreferences prefs, final InitPackageResourcesParam resparam) {
         try {
-            resparam.res.hookLayout(PACKAGE_NAME, "layout", "gemini_super_status_bar", new XC_LayoutInflated() {
+            String layout = Utils.isMtkDevice() ? "gemini_super_status_bar" : "super_status_bar";
+            resparam.res.hookLayout(PACKAGE_NAME, "layout", layout, new XC_LayoutInflated() {
 
                 @Override
                 public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
-
+                    prefs.reload();
+                    mClockShowDow = prefs.getBoolean(GravityBoxSettings.PREF_KEY_STATUSBAR_CLOCK_DOW, false);
+                    
                     mIconArea = (ViewGroup) liparam.view.findViewById(
                             liparam.res.getIdentifier("system_icon_area", "id", PACKAGE_NAME));
                     if (mIconArea == null) return;
@@ -69,6 +86,9 @@ public class ModCenterClock {
                     mClock = (TextView) mIconArea.findViewById(
                             liparam.res.getIdentifier("clock", "id", PACKAGE_NAME));
                     if (mClock == null) return;
+                    ModStatusbarColor.setClock(mClock);
+                    // use this additional field to identify the instance of Clock that resides in status bar
+                    XposedHelpers.setAdditionalInstanceField(mClock, "sbClock", true);
                     mClockOriginalPaddingLeft = mClock.getPaddingLeft();
 
                     // inject new clock layout
@@ -80,7 +100,44 @@ public class ModCenterClock {
                     mRootView.addView(mLayoutClock);
                     log("mLayoutClock injected");
 
-                    prefs.reload();
+                    XposedHelpers.findAndHookMethod(mClock.getClass(), "getSmallTime", new XC_MethodHook() {
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                            // is this a status bar Clock instance?
+                            // yes, if it contains our additional sbClock field
+                            Object sbClock = XposedHelpers.getAdditionalInstanceField(param.thisObject, "sbClock");
+                            if (sbClock != null) {
+                                Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+                                String clockText = param.getResult().toString();
+                                String amPm = calendar.getDisplayName(
+                                        Calendar.AM_PM, Calendar.SHORT, Locale.getDefault());
+                                int amPmIndex = clockText.indexOf(amPm);
+                                // insert AM/PM if missing
+                                if (!DateFormat.is24HourFormat(mClock.getContext()) && amPmIndex == -1) {
+                                    clockText += " " + amPm;
+                                    amPmIndex = clockText.indexOf(amPm);
+                                }
+                                CharSequence dow = "";
+                                if (mClockShowDow) {
+                                    dow = calendar.getDisplayName(
+                                            Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()) + " ";
+                                }
+                                clockText = dow + clockText;
+                                SpannableStringBuilder sb = new SpannableStringBuilder(clockText);
+                                sb.setSpan(new RelativeSizeSpan(0.7f), 0, dow.length(), 
+                                        Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                                if (amPmIndex > -1) {
+                                    int offset = Character.isWhitespace(clockText.charAt(dow.length() + amPmIndex - 1)) ?
+                                            1 : 0;
+                                    sb.setSpan(new RelativeSizeSpan(0.7f), dow.length() + amPmIndex - offset, 
+                                            dow.length() + amPmIndex + amPm.length(), 
+                                            Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                                }
+                                param.setResult(sb);
+                            }
+                        }
+                    });
+
                     setClockPosition(prefs.getBoolean(
                             GravityBoxSettings.PREF_KEY_STATUSBAR_CENTER_CLOCK, false));
                 }
@@ -114,6 +171,7 @@ public class ModCenterClock {
 
                     IntentFilter intentFilter = new IntentFilter();
                     intentFilter.addAction(GravityBoxSettings.ACTION_PREF_CENTER_CLOCK_CHANGED);
+                    intentFilter.addAction(GravityBoxSettings.ACTION_PREF_CLOCK_DOW);
                     mContext.registerReceiver(mBroadcastReceiver, intentFilter);
                 }
             });

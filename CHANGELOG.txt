@@ -1,3 +1,158 @@
+Changelog 2.1.0 - 13/08/2013
+--------------------------------------
+- CyanogenMod Pie Controls featuring:
+--- pie can be dragged and snapped to any screen border
+--- allows up to 4 independent pies, for each screen border
+--- option to show/hide search button
+--- option to set pie size (navigation key size)
+--- option to hide navigation bar while pie is on (for devices having navigation bar)
+--- option to disable HW keys (menu,back,home) while pie is on. HW key long-press and double-tap actions
+    will still work (for devices having HW keys)
+--- additional MENU pie key is available while HW keys are disabled
+- Button backlight modes (in Display tweaks)
+--- standard mode (default)
+--- disable button backlight
+--- keep button backlight on while screen is on
+- Button backlight notifications (experimental)
+--- lights up button backlight when there's a notification and screen is turned off (for devices that lack notification LED)
+- Dithered Holo background is now optional
+- Improved existing reboot menu detection algorithm
+- Option to use dark theme for GravityBox UI (in About menu)
+- Clear all recents revamped
+--- option to set position of clear all recents button (any screen corner)
+--- option to adjust top margin of clear all recents button (e.g. when covered by statusbar)
+- updated Slovak, Czech, French (thanks to ch-vox & Matx13) translations
+
+Changelog 2.0.1 - 09/08/2013
+--------------------------------------
+- fixed option for disabling roaming indicators (MTK devices)
+- fixed AM/PM showing only when Day of week enabled on some devices
+- improved scaling of "clear all recents" button
+- allow overlay/underlay modes also for notification drawer custom images
+- yet another attempt to fix 2G/3G tile for LTE network
+- updated French translations (thanks to ch-vox)
+
+Changelog 2.0.0 - 08/08/2013
+--------------------------------------
+- added support for non-MTK devices running vanilla Android
+- compatibility adjustments to support non-MTK devices and Android 4.3
+- smaller font for day of week and AM/PM in statusbar clock
+- added AM/PM indicator for ROMs where missing while 12h format is set
+- option to set Notification drawer style
+--- default background
+--- color fill with 2 modes: overlay/underlay
+--- independent custom images for portrait and landscape
+--- background transparency level
+- NetworkModeTile: added support for LTE network type to switch between LTE and GSM_ONLY (needs testing)
+- option to show circle battery without percentage
+- option to disable Roaming indicators (MTK6589 only)
+- other compatibility fixes
+
+Changelog 1.8.5 - 01/08/2013
+--------------------------------------
+- fixed status bar background color not being applied at boot on some devices
+- expandable volume panel - make ringer slider always available (e.g. also when music plays)
+- option to set statusbar icon color and data activity indicators color
+--- applies to all icons except for bluetooth and airplane mode icon
+--- stock battery icon won't animate during charging when coloring is turned on
+--- for mobile signal, the basic blue color is overriden. Other 3 colors in SIM Management can be used to override GB color
+- reorganized statusbar preferences
+- optimized resource handling
+- updated Slovak, Czech, French, Russian translations
+
+Changelog 1.8.0 - 28/07/2013
+--------------------------------------
+- Media tweaks
+--- option for expandable volume panel
+--- option to unlink common volumes for ringtone and notifications to control them independently
+- Quick settings
+--- auto-switch to QuickSettings when there are no notifications is now configurable
+--- option to use edges of status bar to quickly pull down QuickSettings (off,left,right)
+- Hardware keys
+--- option to disable volume rocker wake for devices like Jiayu G3S, G4, where volume keys turn on screen
+--- this should also fix volume keys skip track for those devices
+- Messaging wakelock fix
+--- adapted to support more devices (Zopo, Jiayu G3s, G4)
+
+Changelog 1.7.1 - 25/07/2013
+--------------------------------------
+- improved detection of existing Reboot action item.
+--- Fixes duplicate Reboot action item for most devices
+--- There may still be some exotic ones where duplicate may occur - provide framework-res.apk in such case
+- updated Traditional Chinese translations (thanks to c1126230)
+- updated Ukrainian translations (thanks to alex_glbr)
+
+Changelog 1.7.0 - 24/07/2013
+--------------------------------------
+- Advanced reboot menu revamped
+--- binds to existing Reboot item if exists
+--- creates new Reboot item if it does not exist
+--- added Soft Reboot option
+- Display Tweaks
+--- dithered Holo background to suppress color banding
+--- option to use solid black Holo background instead of black-grey gradient
+- Hardware key actions
+--- added "Go to sleep" action (mimics power key)
+- QuickSettings tiles
+--- added Sleep tile (mimics power key)
+--- added QuickRecord tile - allows to quickly record audio
+------ long-press to start recording
+------ single-press to stop recording or start/stop playback
+--- option to set number of tiles per row for portrait mode (3,4,5)
+- Developer options
+--- added 0.25x scale factor for animations
+- Battery style revamped
+--- allows battery percent text to be turned on for any battery style (independent option)
+--- removed obsolete Battery percent setting from Battery settings
+- added Traditional Chinese translations (thanks to c1126230)
+
+Changelog 1.6.1 - 19/07/2013
+--------------------------------------
+Security release, patching following vulnerabilities:
+- Master Key (Bug 8219321) - http://bluebox.com/corporate-blog/bluebox-uncovers-android-master-key/
+- Bug 9695860 - http://www.androidpolice.com/2013/07/11/second-all-access-apk-exploit-is-revealed-just-two-days-after-master-key-goes-public-already-patched-by-google/
+Thanks to Tungstwenty@XDA for original xposed module
+https://github.com/Tungstwenty/MasterKeyDualFix
+
+Changelog 1.6.0 - 18/07/2013
+--------------------------------------
+- Hardware key actions
+--- on Menu long-press
+--- on Menu double-tap
+--- on Back long-press
+--- available actions: search, voice search, switch to previous app, kill foreground app
+- Phone tweaks
+--- flip action while ringing (do nothing, mute ringer, dismiss call)
+--- disable vibrate on call connect
+- fixed CRT screen off animation not working on some ROMs
+- updated translations: Slovak, Czech, Danish, French, Russian
+
+Changelog 1.5.1 - 15/07/2013
+--------------------------------------
+- updated Danish translations (thx Mr.Premise)
+- updated French translations (thx ch-vox)
+- added Ukrainian translations (thx alex_glbr)
+
+Changelog 1.5.0 - 08/07/2013
+--------------------------------------
+- Lockscreen tweaks
+--- option to enable lockscreen rotation
+--- option to enable quick-unlock by menu key on lockscreen
+- Statusbar tweaks
+--- option to center statusbar clock
+- Power tweaks
+--- option to disable LED while charging
+- Display tweaks
+--- option to set minimum brightness level for manual brightness setting
+--- interface for adjusting autobrightness levels
+- Media tweaks
+--- option to add more volume levels for music stream
+--- option to control safe headset media volume feature
+- General fixes
+--- fix wakelock in messaging app causing screen turn on every time new message arrives
+- Added Polish translations (thanks to LuHash)
+- Added Portuguese (PT) translations (thanks to bgcngm)
+
 Changelog 1.4.1 - 27/06/2013
 --------------------------------------
 - updated Italian translations (thanks to kidmar)

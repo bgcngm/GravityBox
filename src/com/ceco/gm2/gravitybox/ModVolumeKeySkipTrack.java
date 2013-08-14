@@ -15,7 +15,6 @@ import android.view.ViewConfiguration;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.callbacks.XCallback;
 
 public class ModVolumeKeySkipTrack {
     private static boolean mIsLongPress = false;
@@ -45,7 +44,7 @@ public class ModVolumeKeySkipTrack {
         } catch (Exception e) { XposedBridge.log(e); }
     }
 
-    private static XC_MethodHook handleInterceptKeyBeforeQueueing = new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
+    private static XC_MethodHook handleInterceptKeyBeforeQueueing = new XC_MethodHook() {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             final boolean isScreenOn = (Boolean) param.args[2];
