@@ -830,7 +830,12 @@
             android:key="pref_volume_panel_expandable"
             android:title="@string/pref_volume_panel_expandable_title"
             android:summary="@string/pref_volume_panel_expandable_summary"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
+
+        <CheckBoxPreference 
+            android:key="pref_volume_panel_autoexpand"
+            android:title="@string/pref_volume_panel_autoexpand_title"
+            android:defaultValue="false" />
 
         <CheckBoxPreference 
             android:key="pref_link_volumes"
@@ -871,6 +876,12 @@
             android:entries="@array/hwkey_action_entries"
             android:entryValues="@array/hwkey_action_values"
             android:defaultValue="0" />
+
+        <CheckBoxPreference 
+            android:key="pref_hwkey_home_longpress_keyguard"
+            android:title="@string/pref_hwkey_home_longpress_keyguard_title"
+            android:summary="@string/pref_hwkey_home_longpress_keyguard_summary"
+            android:defaultValue="false" />
 
         <ListPreference
             android:key="pref_hwkey_back_longpress"

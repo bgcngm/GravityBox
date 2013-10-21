@@ -658,6 +658,7 @@
     <string name="pref_data_traffic_position_title">Position</string>
     <string name="dt_position_auto">Auto (center or right depending on clock position)</string>
     <string name="dt_position_left">Left</string>
+    <string name="dt_position_right">Right</string>
     <string name="pref_data_traffic_size_title">Size</string>
     <string name="dt_size_normal">Normal</string>
     <string name="dt_size_smaller">Smaller</string>
@@ -688,5 +689,15 @@
     <!-- Lockscreen battery arc -->
     <string name="pref_lockscreen_battery_arc_title">Show battery arc</string>
     <string name="pref_lockscreen_battery_arc_summary">Shows battery status arc drawn around unlock ring handle</string>
+
+    <!-- HW Key Actions: toggle torch -->
+    <string name="hwkey_action_torch">Toggle torch</string>
+
+    <!-- HW Key Actions: toggle torch on home key long-press while on lockscreen -->
+    <string name="pref_hwkey_home_longpress_keyguard_title">Torch on home key long-press</string>
+    <string name="pref_hwkey_home_longpress_keyguard_summary">Toggles torch on/off when device locked. Screen has to be be turned on if device lacks native wake by home key support.</string>
+
+    <!-- Volume panel: Show expanded -->
+    <string name="pref_volume_panel_autoexpand_title">Expand automatically</string>
 
 </resources>
