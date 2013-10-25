@@ -292,6 +292,13 @@
                 android:summary="@string/pref_statusbar_color_skip_battery_summary"
                 android:defaultValue="false" />
 
+            <ListPreference
+                android:key="pref_statusbar_signal_color_mode" 
+                android:title="@string/pref_statusbar_signal_color_mode_title"
+                android:entries="@array/signal_color_mode_entries"
+                android:entryValues="@array/signal_color_mode_values"
+                android:defaultValue="0" />
+
         </PreferenceScreen>
 
         <PreferenceScreen 
@@ -888,6 +895,11 @@
                 android:key="pref_hwkey_home_longpress_keyguard"
                 android:title="@string/pref_hwkey_home_longpress_keyguard_title"
                 android:summary="@string/pref_hwkey_home_longpress_keyguard_summary"
+                android:defaultValue="false" />
+
+            <CheckBoxPreference
+                android:key="pref_hwkey_home_doubletap_disable"
+                android:title="@string/pref_hwkey_doubletap_disable_title"
                 android:defaultValue="false" />
 
         </PreferenceCategory>

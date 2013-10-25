@@ -125,6 +125,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
     public static final String PREF_KEY_STATUSBAR_ICON_COLOR = "pref_statusbar_icon_color";
     public static final String PREF_KEY_STATUSBAR_DATA_ACTIVITY_COLOR = "pref_statusbar_data_activity_color";
     public static final String PREF_KEY_STATUSBAR_COLOR_SKIP_BATTERY = "pref_statusbar_color_skip_battery";
+    public static final String PREF_KEY_STATUSBAR_SIGNAL_COLOR_MODE = "pref_statusbar_signal_color_mode";
     public static final String PREF_KEY_STATUSBAR_CENTER_CLOCK = "pref_statusbar_center_clock";
     public static final String PREF_KEY_STATUSBAR_CLOCK_DOW = "pref_statusbar_clock_dow2";
     public static final int DOW_DISABLED = 0;
@@ -215,6 +216,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
     public static final String PREF_KEY_HWKEY_MENU_DOUBLETAP = "pref_hwkey_menu_doubletap";
     public static final String PREF_CAT_HWKEY_HOME = "pref_cat_hwkey_home";
     public static final String PREF_KEY_HWKEY_HOME_LONGPRESS = "pref_hwkey_home_longpress";
+    public static final String PREF_KEY_HWKEY_HOME_DOUBLETAP_DISABLE = "pref_hwkey_home_doubletap_disable";
     public static final String PREF_KEY_HWKEY_HOME_LONGPRESS_KEYGUARD = "pref_hwkey_home_longpress_keyguard";
     public static final String PREF_CAT_HWKEY_BACK = "pref_cat_hwkey_back";
     public static final String PREF_KEY_HWKEY_BACK_LONGPRESS = "pref_hwkey_back_longpress";
@@ -244,6 +246,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
     public static final String ACTION_PREF_HWKEY_MENU_LONGPRESS_CHANGED = "gravitybox.intent.action.HWKEY_MENU_LONGPRESS_CHANGED";
     public static final String ACTION_PREF_HWKEY_MENU_DOUBLETAP_CHANGED = "gravitybox.intent.action.HWKEY_MENU_DOUBLETAP_CHANGED";
     public static final String ACTION_PREF_HWKEY_HOME_LONGPRESS_CHANGED = "gravitybox.intent.action.HWKEY_HOME_LONGPRESS_CHANGED";
+    public static final String ACTION_PREF_HWKEY_HOME_DOUBLETAP_CHANGED = "gravitybox.intent.action.HWKEY_HOME_DOUBLETAP_CHANGED";
     public static final String ACTION_PREF_HWKEY_BACK_LONGPRESS_CHANGED = "gravitybox.intent.action.HWKEY_BACK_LONGPRESS_CHANGED";
     public static final String ACTION_PREF_HWKEY_RECENTS_SINGLETAP_CHANGED = "gravitybox.intent.action.HWKEY_RECENTS_SINGLETAP_CHANGED";
     public static final String ACTION_PREF_HWKEY_RECENTS_LONGPRESS_CHANGED = "gravitybox.intent.action.HWKEY_RECENTS_LONGPRESS_CHANGED";
@@ -251,6 +254,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
     public static final String ACTION_PREF_HWKEY_KILL_DELAY_CHANGED = "gravitybox.intent.action.HWKEY_KILL_DELAY_CHANGED";
     public static final String ACTION_PREF_VOLUME_ROCKER_WAKE_CHANGED = "gravitybox.intent.action.VOLUME_ROCKER_WAKE_CHANGED";
     public static final String EXTRA_HWKEY_VALUE = "hwKeyValue";
+    public static final String EXTRA_HWKEY_HOME_DOUBLETAP_DISABLE = "hwKeyHomeDoubletapDisable";
     public static final String EXTRA_HWKEY_HOME_LONGPRESS_KG = "hwKeyHomeLongpressKeyguard";
     public static final String EXTRA_VOLUME_ROCKER_WAKE_DISABLE = "volumeRockerWakeDisable";
 
@@ -334,6 +338,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
     public static final String EXTRA_SB_ICON_COLOR = "iconColor";
     public static final String EXTRA_SB_DATA_ACTIVITY_COLOR = "dataActivityColor";
     public static final String EXTRA_SB_COLOR_SKIP_BATTERY = "skipBattery";
+    public static final String EXTRA_SB_SIGNAL_COLOR_MODE = "signalColorMode";
     public static final String EXTRA_TM_SB_LAUNCHER = "tmSbLauncher";
     public static final String EXTRA_TM_SB_LOCKSCREEN = "tmSbLockscreen";
     public static final String EXTRA_TM_NB_LAUNCHER = "tmNbLauncher";
@@ -658,6 +663,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
         private MultiSelectListPreference mPrefQsTileBehaviourOverride;
         private ListPreference mPrefQsNetworkModeSimSlot;
         private CheckBoxPreference mPrefSbColorSkipBattery;
+        private ListPreference mPrefSbSignalColorMode;
         private CheckBoxPreference mPrefUnplugTurnsOnScreen;
         private MultiSelectListPreference mPrefCallVibrations;
         private Preference mPrefQsTileOrder;
@@ -668,6 +674,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
         private CheckBoxPreference mPrefLinkVolumes;
         private CheckBoxPreference mPrefVolumePanelExpandable;
         private CheckBoxPreference mPrefVolumePanelAutoexpand;
+        private CheckBoxPreference mPrefHomeDoubletapDisable;
 
         @SuppressWarnings("deprecation")
         @Override
@@ -741,6 +748,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
             mPrefHwKeyDoubletapSpeed = (ListPreference) findPreference(PREF_KEY_HWKEY_DOUBLETAP_SPEED);
             mPrefHwKeyKillDelay = (ListPreference) findPreference(PREF_KEY_HWKEY_KILL_DELAY);
             mPrefCatHwKeyVolume = (PreferenceCategory) findPreference(PREF_CAT_HWKEY_VOLUME);
+            mPrefHomeDoubletapDisable = (CheckBoxPreference) findPreference(PREF_KEY_HWKEY_HOME_DOUBLETAP_DISABLE);
 
             mPrefPhoneFlip = (ListPreference) findPreference(PREF_KEY_PHONE_FLIP);
 
@@ -748,6 +756,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
             mPrefSbIconColor = (ColorPickerPreference) findPreference(PREF_KEY_STATUSBAR_ICON_COLOR);
             mPrefSbDaColor = (ColorPickerPreference) findPreference(PREF_KEY_STATUSBAR_DATA_ACTIVITY_COLOR);
             mPrefSbColorSkipBattery = (CheckBoxPreference) findPreference(PREF_KEY_STATUSBAR_COLOR_SKIP_BATTERY);
+            mPrefSbSignalColorMode = (ListPreference) findPreference(PREF_KEY_STATUSBAR_SIGNAL_COLOR_MODE);
 
             mPrefCatFixes = (PreferenceScreen) findPreference(PREF_CAT_KEY_FIXES);
             mPrefFixDateTimeCrash = (CheckBoxPreference) findPreference(PREF_KEY_FIX_DATETIME_CRASH);
@@ -917,6 +926,11 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
                 mPrefCatDisplay.removePreference(mPrefCatBrightness);
                 mPrefCatDisplay.removePreference(mPrefCrtOff);
                 mPrefCatMedia.removePreference(mPrefSafeMediaVolume);
+            }
+
+            // Remove preferences not compatible with Android < 4.3+
+            if (Build.VERSION.SDK_INT < 18) {
+                mPrefCatHwKeyHome.removePreference(mPrefHomeDoubletapDisable);
             }
 
             // Remove more music volume steps option if necessary
@@ -1120,6 +1134,7 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
                 mPrefSbIconColor.setEnabled(mPrefSbIconColorEnable.isChecked());
                 mPrefSbDaColor.setEnabled(mPrefSbIconColorEnable.isChecked());
                 mPrefSbColorSkipBattery.setEnabled(mPrefSbIconColorEnable.isChecked());
+                mPrefSbSignalColorMode.setEnabled(mPrefSbIconColorEnable.isChecked());
             }
 
             if (key == null || key.equals(PREF_KEY_NOTIF_BACKGROUND)) {
@@ -1245,6 +1260,10 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
             if (key == null || key.equals(PREF_KEY_VOLUME_PANEL_EXPANDABLE)) {
                 mPrefVolumePanelAutoexpand.setEnabled(mPrefVolumePanelExpandable.isChecked());
             }
+
+            if (key == null || key.equals(PREF_KEY_STATUSBAR_SIGNAL_COLOR_MODE)) {
+                mPrefSbSignalColorMode.setSummary(mPrefSbSignalColorMode.getEntry());
+            }
         }
 
         @Override
@@ -1301,6 +1320,10 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
                 intent.setAction(ACTION_PREF_STATUSBAR_COLOR_CHANGED);
                 intent.putExtra(EXTRA_SB_COLOR_SKIP_BATTERY,
                         prefs.getBoolean(PREF_KEY_STATUSBAR_COLOR_SKIP_BATTERY, false));
+            } else if (key.equals(PREF_KEY_STATUSBAR_SIGNAL_COLOR_MODE)) {
+                intent.setAction(ACTION_PREF_STATUSBAR_COLOR_CHANGED);
+                intent.putExtra(EXTRA_SB_SIGNAL_COLOR_MODE,
+                        Integer.valueOf(prefs.getString(PREF_KEY_STATUSBAR_SIGNAL_COLOR_MODE, "0")));
             } else if (key.equals(PREF_KEY_TM_STATUSBAR_LAUNCHER)) {
                 intent.setAction(ACTION_PREF_STATUSBAR_COLOR_CHANGED);
                 intent.putExtra(EXTRA_TM_SB_LAUNCHER, prefs.getInt(PREF_KEY_TM_STATUSBAR_LAUNCHER, 0));
@@ -1354,6 +1377,10 @@ public class GravityBoxSettings extends Activity implements GravityBoxResultRece
                 intent.setAction(ACTION_PREF_HWKEY_HOME_LONGPRESS_CHANGED);
                 intent.putExtra(EXTRA_HWKEY_HOME_LONGPRESS_KG, prefs.getBoolean(
                         GravityBoxSettings.PREF_KEY_HWKEY_HOME_LONGPRESS_KEYGUARD, false));
+            } else if (key.equals(PREF_KEY_HWKEY_HOME_DOUBLETAP_DISABLE)) {
+                intent.setAction(ACTION_PREF_HWKEY_HOME_DOUBLETAP_CHANGED);
+                intent.putExtra(EXTRA_HWKEY_HOME_DOUBLETAP_DISABLE,
+                        prefs.getBoolean(PREF_KEY_HWKEY_HOME_DOUBLETAP_DISABLE, false));
             } else if (key.equals(PREF_KEY_HWKEY_BACK_LONGPRESS)) {
                 intent.setAction(ACTION_PREF_HWKEY_BACK_LONGPRESS_CHANGED);
                 intent.putExtra(EXTRA_HWKEY_VALUE, Integer.valueOf(
