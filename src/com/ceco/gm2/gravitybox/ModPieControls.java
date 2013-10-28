@@ -101,7 +101,6 @@ public class ModPieControls {
                     mPieController.setCustomKeyMode(intent.getIntExtra(
                             GravityBoxSettings.EXTRA_PIE_CUSTOM_KEY_MODE,
                             GravityBoxSettings.PIE_CUSTOM_KEY_OFF));
-                    attachPie();
                 }
                 if (intent.hasExtra(GravityBoxSettings.EXTRA_PIE_TRIGGERS)) {
                     String[] triggers = intent.getStringArrayExtra(
@@ -128,6 +127,26 @@ public class ModPieControls {
                     mAlwaysShowMenuItem = intent.getBooleanExtra(
                             GravityBoxSettings.EXTRA_PIE_MENU, false);
                     mPieController.setMenuVisibility(mShowMenuItem | mAlwaysShowMenuItem);
+                }
+                if (intent.hasExtra(GravityBoxSettings.EXTRA_PIE_COLOR_BG)) {
+                    mPieController.setBackgroundColor(intent.getIntExtra(GravityBoxSettings.EXTRA_PIE_COLOR_BG,
+                            mGbContext.getResources().getColor(R.color.pie_background_color)));
+                }
+                if (intent.hasExtra(GravityBoxSettings.EXTRA_PIE_COLOR_FG)) {
+                    mPieController.setForegroundColor(intent.getIntExtra(GravityBoxSettings.EXTRA_PIE_COLOR_FG,
+                            mGbContext.getResources().getColor(R.color.pie_foreground_color)));
+                }
+                if (intent.hasExtra(GravityBoxSettings.EXTRA_PIE_COLOR_OUTLINE)) {
+                    mPieController.setOutlineColor(intent.getIntExtra(GravityBoxSettings.EXTRA_PIE_COLOR_OUTLINE,
+                            mGbContext.getResources().getColor(R.color.pie_outline_color)));
+                }
+                if (intent.hasExtra(GravityBoxSettings.EXTRA_PIE_COLOR_SELECTED)) {
+                    mPieController.setSelectedColor(intent.getIntExtra(GravityBoxSettings.EXTRA_PIE_COLOR_SELECTED,
+                            mGbContext.getResources().getColor(R.color.pie_selected_color)));
+                }
+                if (intent.hasExtra(GravityBoxSettings.EXTRA_PIE_COLOR_TEXT)) {
+                    mPieController.setTextColor(intent.getIntExtra(GravityBoxSettings.EXTRA_PIE_COLOR_TEXT,
+                            mGbContext.getResources().getColor(R.color.pie_text_color)));
                 }
             } else if (intent.getAction().equals(GravityBoxSettings.ACTION_PREF_EXPANDED_DESKTOP_MODE_CHANGED)) {
                 mExpandedDesktopMode = intent.getIntExtra(
@@ -255,7 +274,7 @@ public class ModPieControls {
                     mContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
                     mGbContext = mContext.createPackageContext(GravityBox.PACKAGE_NAME, Context.CONTEXT_IGNORE_SECURITY);
                     mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-                    mPieController = new PieController(mContext, mGbContext);
+                    mPieController = new PieController(mContext, mGbContext, prefs);
 
                     int customKeyMode = GravityBoxSettings.PIE_CUSTOM_KEY_OFF;
                     try {
@@ -353,29 +372,31 @@ public class ModPieControls {
         }
     }
 
-    private static boolean isPieEnabled() {
-        final ContentResolver cr = mContext.getContentResolver();
-        if (DEBUG) log("isPieEnabled: mPieMode = " + mPieMode);
+    public static boolean isPieEnabled(Context context, int pieMode, int expandedDesktopMode) {
+        if (context == null) return false;
 
-        switch(mPieMode) {
+        final ContentResolver cr = context.getContentResolver();
+        if (DEBUG) log("isPieEnabled: mPieMode = " + pieMode);
+
+        switch(pieMode) {
             case PIE_DISABLED: return false;
             case PIE_ENABLED_ALWAYS: return true;
             case PIE_ENABLED_ED:
             case PIE_ENABLED_ED_NAVBAR_HIDDEN:
-                if (DEBUG) log("isPieEnabled: SETTING_EXPANDED_DESKTOP_MODE = " + mExpandedDesktopMode);
+                if (DEBUG) log("isPieEnabled: SETTING_EXPANDED_DESKTOP_MODE = " + expandedDesktopMode);
                 final boolean edEnabled = Settings.System.getInt(
                         cr, ModExpandedDesktop.SETTING_EXPANDED_DESKTOP_STATE, 0) == 1;
                 if (DEBUG) log("isPieEnabled: SETTING_EXPANDED_DESKTOP_STATE = " + edEnabled);
-                return edEnabled && (mPieMode == PIE_ENABLED_ED ||
-                        (mPieMode == PIE_ENABLED_ED_NAVBAR_HIDDEN 
-                            && (mExpandedDesktopMode == GravityBoxSettings.ED_NAVBAR ||
-                                    mExpandedDesktopMode == GravityBoxSettings.ED_BOTH)));
+                return edEnabled && (pieMode == PIE_ENABLED_ED ||
+                        (pieMode == PIE_ENABLED_ED_NAVBAR_HIDDEN 
+                            && (expandedDesktopMode == GravityBoxSettings.ED_NAVBAR ||
+                                    expandedDesktopMode == GravityBoxSettings.ED_BOTH)));
             default: return false;
         }
     }
 
     private static void attachPie() {
-        if (isPieEnabled()) {
+        if (isPieEnabled(mContext, mPieMode, mExpandedDesktopMode)) {
 
             // Create our container, if it does not exist already
             if (mPieContainer == null) {

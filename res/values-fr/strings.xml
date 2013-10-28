@@ -96,7 +96,7 @@
     <string name="quick_settings_wifi">Wi-Fi</string>
     <string name="quick_settings_wifi_off">Wi-Fi off</string>
     <string name="quick_settings_wifi_not_connected">Non connecté</string>
-    <string name="quick_settings_wifi_turning_on">Mise en route...</string>
+    <string name="quick_settings_wifi_turning_on">Mise en route&#8230;</string>
 
     <!--  QuickSettings settings -->
     <string name="quick_settings_title">Touches des paramètres rapides</string>
@@ -134,7 +134,7 @@
 
     <!--  Statusbar background color -->
     <string name="statusbar_bgcolor_title">Couleur barre d\'état</string>
-    <string name="statusbar_bgcolor_summary">Permet de choisir la couleur de fond de la barre d\'état et sa transparence</string>
+    <string name="statusbar_bgcolor_summary">Permet de choisir la couleur de fond de la barre d\'état</string>
 
     <!--  Fix speech settings -->
     <string name="fix_tts_settings_title">Paramètres liés à la parole</string>
@@ -400,9 +400,9 @@
     <string name="pref_holo_bg_dither_title">Arrière-plan Holo tramé</string>
     <string name="pref_holo_bg_dither_summary">Remplace l\'arrière-plan Holo standard par un arrière-plan tramé pour supprimer les bandes de couleur (nécessite un redémarrage)</string>
 
-    <!-- Disable hardware keys for pie -->
-    <string name="pref_hwkeys_disable_title">Désactiver les touches matérielles</string>
-    <string name="pref_hwkeys_disable_summary">Désactive les touches MENU, RETOUR, et HOME si les touches flottantes sont activées. Les actions des touches matérielles fonctionneront toujours (pour les appareils ayant des touches matérielles)</string>
+    <!-- Disable navigation keys for pie -->
+    <string name="pref_hwkeys_disable_title">Désactiver les touches de navigation</string>
+    <string name="pref_hwkeys_disable_summary">Désactive l\'appui simple sur les touches de navigation lorsque les touches flottantes sont activées</string>
 
     <!-- Option for GB dark theme -->
     <string name="pref_gb_theme_dark_title">Utiliser le thème Holo Dark</string>
@@ -718,5 +718,38 @@
     <string name="signal_color_mode_gb">Utiliser les icônes GravityBox (niveau du signal supporté)</string>
     <string name="signal_color_mode_stock">Utiliser les icônes par défaut (niveau du signal non supporté)</string>
     <string name="signal_color_mode_disabled">Ne pas modifier les couleurs</string>
+ 
+    <!-- Application launcher -->
+    <string name="pref_cat_app_launcher_title">Lanceur d\'applications</string>
+    <string name="pref_cat_app_launcher_summary">Boîte de dialogue qui permet de définir jusqu\'à 8 applications pouvant être assignées à une action sur touche matérielle ou utilisées comme touche supplémentaire dans la barre de navigation</string>
+    <string name="pref_app_launcher_slot_title">Application de l\'emplacement %d</string>
+    <string name="app_launcher_no_apps">Aucune application assignée. Utiliser l\'item GravityBox / Lanceur d\'applications pour assigner des applications</string>
+
+    <!-- Navigation bar app launcher key -->
+    <string name="pref_navbar_launcher_enable_title">Afficher la touche lanceur d\'appli</string>
+    
+    <!-- HW Key Actions: application launcher -->
+    <string name="hwkey_action_app_launcher">Afficher le lanceur d\'application</string>
+
+    <!-- Pie custom key -->
+    <string name="pref_pie_control_custom_key_title">Afficher la touche personnalisée</string>
+    <string name="pie_custom_key_off">Désactivé</string>
+    <string name="pie_custom_key_search">Rechercher</string>
+    <string name="pie_custom_key_app_launcher">Lanceur d\'applications</string>
+
+    <!-- Pie colors -->
+    <string name="pref_cat_pie_colors_title">Couleurs touches flottantes</string>
+    <string name="pref_pie_color_bg_title">Couleur arrière-plan</string>
+    <string name="pref_pie_color_fg_title">Couleur premier plan</string>
+    <string name="pref_pie_color_outline_title">Couleur du contour</string>
+    <string name="pref_pie_color_selected_title">Couleur de la touche sélectionnée</string>
+    <string name="pref_pie_color_text_title">Couleur du texte</string>
+    <string name="pref_pie_color_reset_title">Réinitialiser les couleurs</string>
+
+    <!-- Custom unknown caller photo -->
+    <string name="pref_caller_unknown_photo_enable_title">Activer la photo pour appelant non identifié</string>
+    <string name="pref_caller_unknown_photo_title">Définir la photo pour appelant non identifié</string>
+    <string name="caller_unknown_photo_result_successful">Photo changée</string>
+    <string name="caller_unkown_photo_result_not_successful">Photo non changée</string>
  
 </resources>
