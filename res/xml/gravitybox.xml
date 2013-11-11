@@ -103,6 +103,12 @@
                 android:summary="@string/pref_lockscreen_bg_image_summary"
                 android:order="3" />
 
+            <CheckBoxPreference
+                android:key="pref_lockscreen_shade_disable"
+                android:title="@string/pref_lockscreen_shade_disable_title"
+                android:summary="@string/pref_lockscreen_shade_disable_summary"
+                android:defaultValue="false" />
+
         </PreferenceCategory>
 
         <PreferenceCategory
@@ -643,6 +649,12 @@
                 android:title="@string/pref_navbar_key_glow_color_title"
                 android:defaultValue="@color/navbar_key_glow_color"
                 alphaSlider="true" />
+
+            <net.margaritov.preference.colorpicker.ColorPickerPreference 
+                android:key="pref_navbar_bg_color"
+                android:title="@string/pref_navbar_bg_color_title"
+                android:defaultValue="@color/navbar_bg_color"
+                alphaSlider="false" />
 
         </PreferenceCategory>
 
