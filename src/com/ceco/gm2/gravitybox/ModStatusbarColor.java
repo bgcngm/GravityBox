@@ -158,11 +158,23 @@ public class ModStatusbarColor {
                             GravityBoxSettings.EXTRA_SB_ICON_COLOR, mIconManager.getDefaultIconColor());
                     mIconManager.setIconColor(iconColor);
                     applyIconColors();
+                } else if (intent.hasExtra(GravityBoxSettings.EXTRA_SB_ICON_COLOR_SECONDARY)) {
+                    int iconColor = intent.getIntExtra(
+                            GravityBoxSettings.EXTRA_SB_ICON_COLOR_SECONDARY, 
+                            mIconManager.getDefaultIconColor());
+                    mIconManager.setIconColor(1, iconColor);
+                    applyIconColors();
                 } else if (intent.hasExtra(GravityBoxSettings.EXTRA_SB_DATA_ACTIVITY_COLOR)) {
                     int daColor = intent.getIntExtra(
                             GravityBoxSettings.EXTRA_SB_DATA_ACTIVITY_COLOR, 
                             StatusBarIconManager.DEFAULT_DATA_ACTIVITY_COLOR);
                     mIconManager.setDataActivityColor(daColor);
+                    applyIconColors();
+                } else if (intent.hasExtra(GravityBoxSettings.EXTRA_SB_DATA_ACTIVITY_COLOR_SECONDARY)) {
+                    int daColor = intent.getIntExtra(
+                            GravityBoxSettings.EXTRA_SB_DATA_ACTIVITY_COLOR_SECONDARY, 
+                            StatusBarIconManager.DEFAULT_DATA_ACTIVITY_COLOR);
+                    mIconManager.setDataActivityColor(1, daColor);
                     applyIconColors();
                 } else if (intent.hasExtra(GravityBoxSettings.EXTRA_SB_ICON_COLOR_ENABLE)) {
                     mIconColorEnabled = intent.getBooleanExtra(
@@ -268,7 +280,7 @@ public class ModStatusbarColor {
     
                 XposedHelpers.findAndHookMethod(phoneWindowManagerClass, "layoutWindowLw",
                         CLASS_POLICY_WINDOW_STATE, WindowManager.LayoutParams.class, 
-                        CLASS_POLICY_WINDOW_STATE, new XC_MethodHook() {
+                        CLASS_POLICY_WINDOW_STATE, new XC_MethodHook(XC_MethodHook.PRIORITY_LOWEST) {
                     @Override
                     protected void afterHookedMethod(final MethodHookParam param) throws Throwable {
                         final boolean isDefaultDisplay = Build.VERSION.SDK_INT > 16 ?
@@ -276,38 +288,34 @@ public class ModStatusbarColor {
                         if (!isNavbarTransparencyEnabled() || !isDefaultDisplay) return; 
     
                         final WindowManager.LayoutParams attrs = (WindowManager.LayoutParams) param.args[1];
-                        final int fl = attrs.flags;
-                        final int sysUiFl = (Integer) XposedHelpers.callMethod(param.args[0], "getSystemUiVisibility");
-                        final Rect pf = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpParentFrame");
-                        final Rect df = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpDisplayFrame");
-                        final Rect cf = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpContentFrame");
-                        final Rect vf = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpVisibleFrame");
-                        final Rect of = Build.VERSION.SDK_INT > 17 ?
+                        if (attrs.type == WindowManager.LayoutParams.TYPE_WALLPAPER) {
+                            final int fl = attrs.flags;
+                            final int sysUiFl = (Integer) XposedHelpers.callMethod(param.args[0], "getSystemUiVisibility");
+                            final Rect pf = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpParentFrame");
+                            final Rect df = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpDisplayFrame");
+                            final Rect cf = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpContentFrame");
+                            final Rect vf = (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpVisibleFrame");
+                            final Rect of = Build.VERSION.SDK_INT > 17 ?
                                 (Rect) XposedHelpers.getObjectField(param.thisObject, "mTmpOverscanFrame") : null;
-    
-                        if ((fl & WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN) != 0 || (sysUiFl
-                                    & (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                               | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)) != 0) {
-                            if (attrs.type == WindowManager.LayoutParams.TYPE_WALLPAPER) {
-                                pf.top = df.top = cf.top = Build.VERSION.SDK_INT > 17 ?
-                                        XposedHelpers.getIntField(param.thisObject, "mOverscanScreenTop") :
-                                        XposedHelpers.getIntField(param.thisObject, "mUnrestrictedScreenTop");
-                                pf.bottom = df.bottom = cf.bottom = pf.top + Build.VERSION.SDK_INT > 17 ? 
-                                        XposedHelpers.getIntField(param.thisObject, "mOverscanScreenHeight") :
-                                        XposedHelpers.getIntField(param.thisObject, "mUnrestrictedScreenHeight");
-                                if (Build.VERSION.SDK_INT > 17) {
-                                    of.set(pf);
-                                }
-                                XposedHelpers.callMethod(param.thisObject, "applyStableConstraints",
-                                        sysUiFl, fl, cf);
-                                vf.set(cf);
-                                if (Build.VERSION.SDK_INT > 17) {
-                                    XposedHelpers.callMethod(param.args[0], "computeFrameLw", pf, df, of, cf, vf);
-                                } else {
-                                    XposedHelpers.callMethod(param.args[0], "computeFrameLw", pf, df, cf, vf);
-                                }
-                                if (DEBUG) log("layoutWindowLw recomputing frame");
+
+                            pf.top = df.top = cf.top = vf.top = 
+                                    XposedHelpers.getIntField(param.thisObject, "mUnrestrictedScreenTop");
+                            pf.bottom = df.bottom = cf.bottom = vf.bottom = pf.top + 
+                                    XposedHelpers.getIntField(param.thisObject, "mUnrestrictedScreenHeight");
+
+                            if (Build.VERSION.SDK_INT > 17) {
+                                of.set(pf);
                             }
+
+                            XposedHelpers.callMethod(param.thisObject, "applyStableConstraints",
+                                    sysUiFl, fl, cf);
+                            if (Build.VERSION.SDK_INT > 17) {
+                                XposedHelpers.callMethod(param.args[0], "computeFrameLw", pf, df, of, cf, vf);
+                            } else {
+                                XposedHelpers.callMethod(param.args[0], "computeFrameLw", pf, df, cf, vf);
+                            }
+
+                            if (DEBUG) log("layoutWindowLw recomputing frame");
                         }
                     }
                 });
@@ -495,8 +503,14 @@ public class ModStatusbarColor {
                     mIconManager.setIconColor(
                             prefs.getInt(GravityBoxSettings.PREF_KEY_STATUSBAR_ICON_COLOR,
                                     mIconManager.getDefaultIconColor()));
+                    mIconManager.setIconColor(1,
+                            prefs.getInt(GravityBoxSettings.PREF_KEY_STATUSBAR_ICON_COLOR_SECONDARY,
+                                    mIconManager.getDefaultIconColor()));
                     mIconManager.setDataActivityColor(
                             prefs.getInt(GravityBoxSettings.PREF_KEY_STATUSBAR_DATA_ACTIVITY_COLOR, 
+                                    StatusBarIconManager.DEFAULT_DATA_ACTIVITY_COLOR));
+                    mIconManager.setDataActivityColor(1,
+                            prefs.getInt(GravityBoxSettings.PREF_KEY_STATUSBAR_DATA_ACTIVITY_COLOR_SECONDARY, 
                                     StatusBarIconManager.DEFAULT_DATA_ACTIVITY_COLOR));
                     mIconManager.setFollowStockBatteryColor(prefs.getBoolean(
                             GravityBoxSettings.PREF_KEY_STATUSBAR_COLOR_FOLLOW_STOCK_BATTERY, false));
@@ -738,17 +752,17 @@ public class ModStatusbarColor {
                                 ImageView mobile = (ImageView) XposedHelpers.getObjectField(param.thisObject, "mMobileGemini");
                                 if (mobile != null) {
                                     int resId = (Integer) XposedHelpers.callMethod(mobileIconIdsGemini[0], "getIconId");
-                                    Drawable d = mIconManager.getMobileIcon(resId);
+                                    Drawable d = mIconManager.getMobileIcon(1, resId);
                                     if (d != null) mobile.setImageDrawable(d);
                                 }
-                                if (mIconManager.isMobileIconChangeAllowed()) {
+                                if (mIconManager.isMobileIconChangeAllowed(1)) {
                                     ImageView mobileActivity = 
                                             (ImageView) XposedHelpers.getObjectField(param.thisObject, "mMobileActivityGemini");
                                     if (mobileActivity != null) {
                                         try {
                                             int resId = (Integer) XposedHelpers.callMethod(mobileActivityIdGemini, "getIconId");
                                             Drawable d = res.getDrawable(resId).mutate();
-                                            d = mIconManager.applyDataActivityColorFilter(d);
+                                            d = mIconManager.applyDataActivityColorFilter(1, d);
                                             mobileActivity.setImageDrawable(d);
                                         } catch (Resources.NotFoundException e) { 
                                             mobileActivity.setImageDrawable(null);
@@ -759,7 +773,7 @@ public class ModStatusbarColor {
                                         try {
                                             int resId = (Integer) XposedHelpers.callMethod(mobileTypeIdGemini, "getIconId");
                                             Drawable d = res.getDrawable(resId).mutate();
-                                            d = mIconManager.applyColorFilter(d);
+                                            d = mIconManager.applyColorFilter(1, d);
                                             mobileType.setImageDrawable(d);
                                         } catch (Resources.NotFoundException e) { 
                                             mobileType.setImageDrawable(null);
@@ -771,7 +785,7 @@ public class ModStatusbarColor {
                                             try {
                                                 int resId = XposedHelpers.getIntField(param.thisObject, "mRoamingGeminiId");
                                                 Drawable d = res.getDrawable(resId).mutate();
-                                                d = mIconManager.applyColorFilter(d);
+                                                d = mIconManager.applyColorFilter(1, d);
                                                 mobileRoam.setImageDrawable(d);
                                             } catch (Resources.NotFoundException e) { 
                                                 mobileRoam.setImageDrawable(null);
